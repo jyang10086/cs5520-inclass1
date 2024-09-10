@@ -1,23 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Header from "./components/Header";
-import { useState } from "react";
+import Input from "./components/Input";
 
 export default function App() {
   const appName = "Hello5520";
-  const [text, setText] = useState("");
   return (
     <View style={styles.container}>
       <Header appName={appName} />
-      <TextInput
-        style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
-        autoCorrect={true}
-        keyboardType="default"
-        placeholder="Type here."
-        onChangeText={(newText) => setText(newText)}
-        value={text}
-      />
-      <Text>{text}</Text>
+      <Input/>
       <StatusBar style="auto" />
     </View>
   );
