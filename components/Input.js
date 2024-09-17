@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Text, TextInput } from "react-native";
-export default function Input({ autoFocus }) {
+import { View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
+export default function Input({ autoFocus, handleInputData, visible }) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
   const [message, setMessage] = useState("");
@@ -19,25 +19,50 @@ export default function Input({ autoFocus }) {
     setMessage("");
   };
 
+  const handleConfirm = () => {
+    handleInputData(text);
+  };
+
   return (
-    <>
-      <TextInput
-        autoFocus={autoFocus}
-        style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
-        autoCorrect={true}
-        keyboardType="default"
-        placeholder="Type here."
-        onChangeText={(newText) => setText(newText)}
-        value={text}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-      />
+    <Modal visible={visible} animationType="slide" transparent={true} >
+      <View style={styles.container}>
+        <TextInput
+          autoFocus={autoFocus}
+          style={styles.textInput}
+          autoCorrect={true}
+          keyboardType="default"
+          placeholder="Type here."
+          onChangeText={(newText) => setText(newText)}
+          value={text}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+        />
 
-      {showCounter && text.length > 0 && (
-        <Text>{`Character count: ${text.length}`}</Text>
-      )}
+        {showCounter && text.length > 0 && (
+          <Text>{`Character count: ${text.length}`}</Text>
+        )}
 
-      {message.length > 0 && <Text>{message}</Text>}
-    </>
+        {message.length > 0 && <Text>{message}</Text>}
+        <Button title="Confirm" onPress={handleConfirm} />
+      </View>
+    </Modal>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    // backgroundColor: "#d8bfd8",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  textInput: {
+    padding: 10,
+    width: '90%',
+    margin: 15,
+    borderRadius: 5,
+    fontSize: 16,
+    borderColor: "purple", 
+    borderWidth: 2
+  },
+});
