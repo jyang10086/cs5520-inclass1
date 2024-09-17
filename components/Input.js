@@ -24,7 +24,7 @@ export default function Input({ autoFocus, handleInputData, visible }) {
   };
 
   return (
-    <Modal visible={visible} animationType="slide">
+    <Modal visible={visible} animationType="slide" transparent={true} >
       <View style={styles.container}>
         <TextInput
           autoFocus={autoFocus}
@@ -52,9 +52,9 @@ export default function Input({ autoFocus, handleInputData, visible }) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: "#d8bfd8",
+    // backgroundColor: "#d8bfd8",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   textInput: {
     padding: 10,
