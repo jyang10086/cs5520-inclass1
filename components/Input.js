@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, TextInput } from "react-native";
+import { Button, Text, TextInput } from "react-native";
 export default function Input({ autoFocus }) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
@@ -17,6 +17,10 @@ export default function Input({ autoFocus }) {
   const handleFocus = () => {
     setShowCounter(true);
     setMessage("");
+  };
+
+  const handleConfirm = () => {
+    console.log(text);
   };
 
   return (
@@ -38,6 +42,10 @@ export default function Input({ autoFocus }) {
       )}
 
       {message.length > 0 && <Text>{message}</Text>}
+      <Button
+        title="Confirm"
+        onPress={handleConfirm}
+      />
     </>
   );
 }
