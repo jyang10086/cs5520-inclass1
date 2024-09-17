@@ -28,7 +28,7 @@ export default function Input({ autoFocus, handleInputData, visible }) {
       <View style={styles.container}>
         <TextInput
           autoFocus={autoFocus}
-          style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
+          style={styles.textInput}
           autoCorrect={true}
           keyboardType="default"
           placeholder="Type here."
@@ -52,8 +52,17 @@ export default function Input({ autoFocus, handleInputData, visible }) {
 const styles = StyleSheet.create({
   container: {
     flex:1,
-    backgroundColor: "#fff",
+    backgroundColor: "#d8bfd8",
     alignItems: "center",
     justifyContent: "center"
+  },
+  textInput: {
+    padding: 10,
+    width: '90%',
+    margin: 15,
+    borderRadius: 5,
+    fontSize: 16,
+    borderColor: "purple", 
+    borderWidth: 2
   },
 });

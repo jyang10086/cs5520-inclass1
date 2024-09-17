@@ -22,7 +22,7 @@ export default function App() {
         autoFocus={true}
         handleInputData={handleInputData}
       />
-      <Text>{inputData}</Text>
+      <Text style= {styles.text}>{inputData}</Text>
       <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       <StatusBar style="auto" />
     </View>
@@ -32,8 +32,12 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#d8bfd8",
     alignItems: "center",
     justifyContent: "center",
   },
+  text: {
+    margin: 10,
+    color:'purple'
+  }
 });
