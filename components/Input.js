@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Button, Text, TextInput } from "react-native";
-export default function Input({ autoFocus, handleInputData }) {
+import { View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
+export default function Input({ autoFocus, handleInputData, visible }) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
   const [message, setMessage] = useState("");
@@ -20,33 +20,40 @@ export default function Input({ autoFocus, handleInputData }) {
   };
 
   const handleConfirm = () => {
-    console.log(text);
     handleInputData(text);
   };
 
   return (
-    <>
-      <TextInput
-        autoFocus={autoFocus}
-        style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
-        autoCorrect={true}
-        keyboardType="default"
-        placeholder="Type here."
-        onChangeText={(newText) => setText(newText)}
-        value={text}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-      />
+    <Modal visible={visible} animationType="slide">
+      <View style={styles.container}>
+        <TextInput
+          autoFocus={autoFocus}
+          style={{ borderBottomColor: "purple", borderBottomWidth: 2 }}
+          autoCorrect={true}
+          keyboardType="default"
+          placeholder="Type here."
+          onChangeText={(newText) => setText(newText)}
+          value={text}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+        />
 
-      {showCounter && text.length > 0 && (
-        <Text>{`Character count: ${text.length}`}</Text>
-      )}
+        {showCounter && text.length > 0 && (
+          <Text>{`Character count: ${text.length}`}</Text>
+        )}
 
-      {message.length > 0 && <Text>{message}</Text>}
-      <Button
-        title="Confirm"
-        onPress={handleConfirm}
-      />
-    </>
+        {message.length > 0 && <Text>{message}</Text>}
+        <Button title="Confirm" onPress={handleConfirm} />
+      </View>
+    </Modal>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+});
