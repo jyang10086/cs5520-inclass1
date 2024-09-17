@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
-export default function Input({ autoFocus, handleInputData, visible }) {
+export default function Input({
+  autoFocus,
+  handleCancel,
+  handleInputData,
+  visible,
+}) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
   const [message, setMessage] = useState("");
@@ -24,7 +29,7 @@ export default function Input({ autoFocus, handleInputData, visible }) {
   };
 
   return (
-    <Modal visible={visible} animationType="slide" transparent={true} >
+    <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.container}>
         <TextInput
           autoFocus={autoFocus}
@@ -43,7 +48,10 @@ export default function Input({ autoFocus, handleInputData, visible }) {
         )}
 
         {message.length > 0 && <Text>{message}</Text>}
-        <Button title="Confirm" onPress={handleConfirm} />
+        <View style={styles.buttonView}>
+          <Button title="Confirm" onPress={handleConfirm} />
+          <Button title="Cancel" onPress={handleCancel} />
+        </View>
       </View>
     </Modal>
   );
@@ -51,18 +59,22 @@ export default function Input({ autoFocus, handleInputData, visible }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     // backgroundColor: "#d8bfd8",
     alignItems: "center",
     justifyContent: "center",
   },
   textInput: {
     padding: 10,
-    width: '90%',
+    width: "90%",
     margin: 15,
     borderRadius: 5,
     fontSize: 16,
-    borderColor: "purple", 
-    borderWidth: 2
+    borderColor: "purple",
+    borderWidth: 2,
+  },
+  buttonView: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
