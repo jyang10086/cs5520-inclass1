@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
+import { Image, View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
 export default function Input({
   autoFocus,
-  handleCancel,
+  onCancel,
   handleInputData,
   visible,
 }) {
@@ -26,31 +26,57 @@ export default function Input({
 
   const handleConfirm = () => {
     handleInputData(text);
+    setText("");
+  };
+
+  const handleCancel = () => {
+    onCancel();
+    setText("");
   };
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.container}>
-        <TextInput
-          autoFocus={autoFocus}
-          style={styles.textInput}
-          autoCorrect={true}
-          keyboardType="default"
-          placeholder="Type here."
-          onChangeText={(newText) => setText(newText)}
-          value={text}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-        />
+        <View style={styles.modelContainer}>
+          <View style={styles.imageView}>
+            <Image
+              source={{
+                uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
+              }}
+              style={styles.image}
+              alt="image from network"
+            />
+            <Image
+              source={require("../assets/goal.png")} // Adjust the path as needed
+              style={styles.image}
+              alt="image from local"
+            />
+          </View>
+          <TextInput
+            autoFocus={autoFocus}
+            style={styles.textInput}
+            autoCorrect={true}
+            keyboardType="default"
+            placeholder="Type here."
+            onChangeText={(newText) => setText(newText)}
+            value={text}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+          />
 
-        {showCounter && text.length > 0 && (
-          <Text>{`Character count: ${text.length}`}</Text>
-        )}
+          {showCounter && text.length > 0 && (
+            <Text>{`Character count: ${text.length}`}</Text>
+          )}
 
-        {message.length > 0 && <Text>{message}</Text>}
-        <View style={styles.buttonView}>
-          <Button title="Confirm" onPress={handleConfirm} />
-          <Button title="Cancel" onPress={handleCancel} />
+          {message.length > 0 && <Text>{message}</Text>}
+          <View style={styles.buttonView}>
+            <Button
+              title="Confirm"
+              onPress={handleConfirm}
+              disabled={text.length < 3}
+            />
+            <Button title="Cancel" onPress={handleCancel} />
+          </View>
         </View>
       </View>
     </Modal>
@@ -60,9 +86,17 @@ export default function Input({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: "#d8bfd8",
     alignItems: "center",
     justifyContent: "center",
+  },
+  modelContainer:{
+    width: 300,
+    height: 400,
+    backgroundColor: 'whitesmoke',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 5,
   },
   textInput: {
     padding: 10,
@@ -76,5 +110,10 @@ const styles = StyleSheet.create({
   buttonView: {
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10, // Optional margin between images
   },
 });

@@ -13,7 +13,7 @@ export default function App() {
     setModalVisible(false);
     setInputData(data);
   };
-  const handleCancel = () => {
+  const onCancel = () => {
     Alert.alert(
       'Confirm Cancel',
       'Are you sure you want to cancel?',
@@ -42,7 +42,7 @@ export default function App() {
           visible={isModalVisible}
           autoFocus={true}
           handleInputData={handleInputData}
-          handleCancel={handleCancel}
+          onCancel={onCancel}
         />
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
