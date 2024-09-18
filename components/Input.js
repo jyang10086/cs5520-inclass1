@@ -47,17 +47,19 @@ export default function Input({
       <View style={styles.container}>
         <View style={styles.modelContainer}>
           <View style={styles.imageView}>
+            {/* alt props is to support accessibility.It is used to 
+            display when the image is not loaded or for use by assistive devices.*/}
             <Image
               source={{
                 uri: "https://cdn-icons-png.flaticon.com/512/2617/2617812.png",
               }}
               style={styles.image}
-              alt="image from network"
+              alt="A goal image from network."
             />
             <Image
-              source={require("../assets/goal.png")} // Adjust the path as needed
+              source={require("../assets/goal.png")}
               style={styles.image}
-              alt="image from local"
+              alt="A goal image from local."
             />
           </View>
           <TextInput
@@ -82,7 +84,7 @@ export default function Input({
               <Button
                 title="Confirm"
                 onPress={handleConfirm}
-                disabled={text.length < 3}
+                disabled={text.length === 0}
               />
             </View>
             <View style={styles.button}>
@@ -133,6 +135,6 @@ const styles = StyleSheet.create({
   image: {
     width: 100,
     height: 100,
-    margin: 10, // Optional margin between images
+    margin: 10,
   },
 });
