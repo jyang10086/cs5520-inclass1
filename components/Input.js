@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { Image, View, Text, TextInput, Button, Modal, StyleSheet } from "react-native";
+import {
+  Image,
+  View,
+  Text,
+  TextInput,
+  Button,
+  Modal,
+  StyleSheet,
+} from "react-native";
 export default function Input({
   autoFocus,
   onCancel,
@@ -70,12 +78,20 @@ export default function Input({
 
           {message.length > 0 && <Text>{message}</Text>}
           <View style={styles.buttonView}>
-            <Button
-              title="Confirm"
-              onPress={handleConfirm}
-              disabled={text.length < 3}
-            />
-            <Button title="Cancel" onPress={handleCancel} />
+            <View style={styles.button}>
+              <Button
+                title="Confirm"
+                onPress={handleConfirm}
+                disabled={text.length < 3}
+              />
+            </View>
+            <View style={styles.button}>
+              <Button
+                style={styles.button}
+                title="Cancel"
+                onPress={handleCancel}
+              />
+            </View>
           </View>
         </View>
       </View>
@@ -84,18 +100,21 @@ export default function Input({
 }
 
 const styles = StyleSheet.create({
+  button: {
+    marginHorizontal: 5,
+  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
   },
-  modelContainer:{
+  modelContainer: {
     width: 300,
     height: 400,
-    backgroundColor: 'whitesmoke',
+    backgroundColor: "whitesmoke",
     borderRadius: 10,
     padding: 20,
-    alignItems: 'center',
+    alignItems: "center",
     elevation: 5,
   },
   textInput: {
