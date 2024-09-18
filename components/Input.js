@@ -82,16 +82,16 @@ export default function Input({
           <View style={styles.buttonView}>
             <View style={styles.button}>
               <Button
-                title="Confirm"
-                onPress={handleConfirm}
-                disabled={text.length === 0}
+                style={styles.button}
+                title="Cancel"
+                onPress={handleCancel}
               />
             </View>
             <View style={styles.button}>
               <Button
-                style={styles.button}
-                title="Cancel"
-                onPress={handleCancel}
+                title="Confirm"
+                onPress={handleConfirm}
+                disabled={text.length === 0}
               />
             </View>
           </View>
