@@ -59,7 +59,10 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
       <View style={styles.bottomView}>
-        <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContainer}
+          bounces={true}
+        >
           {goals.map((goal) => (
             <View key={goal.id} style={styles.textView}>
               <Text style={styles.text}>{goal.text}</Text>
@@ -88,8 +91,8 @@ const styles = StyleSheet.create({
   text: {
     margin: 10,
     color: "indigo",
-    padding: 5,
-    fontSize: 16,
+    padding: 50,
+    fontSize: 50,
   },
   textView: {
     borderRadius: 5,
@@ -99,5 +102,5 @@ const styles = StyleSheet.create({
   scrollContainer: {
     alignItems: "center",
     rowGap: 5,
-  }
+  },
 });
