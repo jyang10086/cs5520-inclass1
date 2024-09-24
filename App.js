@@ -47,6 +47,10 @@ export default function App() {
     );
   };
 
+  const handleDeleteGoalItem = (id) => {
+    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -75,7 +79,9 @@ export default function App() {
         <FlatList
           contentContainerStyle={styles.scrollContainer}
           data={goals}
-          renderItem={({ item }) => <GoalItem item={item} />}
+          renderItem={({ item }) => (
+            <GoalItem item={item} onDelete={handleDeleteGoalItem} />
+          )}
         />
       </View>
     </SafeAreaView>
