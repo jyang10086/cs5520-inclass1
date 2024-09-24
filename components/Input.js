@@ -16,7 +16,6 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
-  const [message, setMessage] = useState("");
 
   const handleBlur = () => {
     setShowCounter(false);
@@ -24,7 +23,6 @@ export default function Input({
 
   const handleFocus = () => {
     setShowCounter(true);
-    setMessage("");
   };
 
   const handleConfirm = () => {
@@ -36,14 +34,6 @@ export default function Input({
     onCancel();
     setText("");
   };
-
-  useEffect(() => {
-    if (text && text.length >= 3) {
-      setMessage("Thank you");
-    } else {
-      setMessage("Please type more than 3 characters");
-    }
-  }, [text]);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
@@ -81,7 +71,6 @@ export default function Input({
             <Text>{`Character count: ${text.length}`}</Text>
           )}
 
-          {message.length > 0 && <Text>{message}</Text>}
           <View style={styles.buttonView}>
             <View style={styles.button}>
               <Button
