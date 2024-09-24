@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Image,
   View,
@@ -20,11 +20,6 @@ export default function Input({
 
   const handleBlur = () => {
     setShowCounter(false);
-    if (text.length >= 3) {
-      setMessage("Thank you");
-    } else {
-      setMessage("Please type more than 3 characters");
-    }
   };
 
   const handleFocus = () => {
@@ -41,6 +36,14 @@ export default function Input({
     onCancel();
     setText("");
   };
+
+  useEffect(() => {
+    if (text && text.length >= 3) {
+      setMessage("Thank you");
+    } else {
+      setMessage("Please type more than 3 characters");
+    }
+  }, [text]);
 
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
@@ -91,7 +94,7 @@ export default function Input({
               <Button
                 title="Confirm"
                 onPress={handleConfirm}
-                disabled={text.length === 0}
+                disabled={text.length < 3}
               />
             </View>
           </View>
