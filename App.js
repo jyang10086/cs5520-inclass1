@@ -7,13 +7,13 @@ import {
   Text,
   View,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
 
 export default function App() {
   const appName = "Hello5520";
-  const [inputData, setInputData] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [goals, setGoals] = useState([]);
@@ -25,7 +25,6 @@ export default function App() {
       id: Math.random().toString(),
     };
     setGoals((prevGoals) => [...prevGoals, newGoal]);
-    setInputData("");
   };
   const onCancel = () => {
     Alert.alert(
@@ -60,11 +59,13 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
       <View style={styles.bottomView}>
-        {goals.map((goal) => (
-          <View key={goal.id} style={styles.textView}>
-            <Text style={styles.text}>{goal.text}</Text>
-          </View>
-        ))}
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          {goals.map((goal) => (
+            <View key={goal.id} style={styles.textView}>
+              <Text style={styles.text}>{goal.text}</Text>
+            </View>
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
@@ -83,17 +84,20 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: "#d8bfd8",
-    alignItems: "center",
   },
   text: {
     margin: 10,
-    color: "blue",
+    color: "indigo",
     padding: 5,
     fontSize: 16,
   },
   textView: {
     borderRadius: 5,
-    marginTop:10,
+    marginTop: 10,
     backgroundColor: "gray",
   },
+  scrollContainer: {
+    alignItems: "center",
+    rowGap: 5,
+  }
 });
