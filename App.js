@@ -58,6 +58,30 @@ export default function App() {
     return null;
   };
 
+  const renderFooter = () => {
+    if (goals.length > 0) {
+      return <Button title="Delete All" onPress={deleteAllGoals} />;
+    }
+    return null;
+  };
+
+  const deleteAllGoals = () => {
+    Alert.alert(
+      "Delete All Goals",
+      "Are you sure you want to delete all goals?",
+      [
+        {
+          text: "No",
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => setGoals([]),
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -93,6 +117,7 @@ export default function App() {
             <Text style={styles.listText}>No goals to show</Text>
           )}
           ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
         />
       </View>
     </SafeAreaView>
