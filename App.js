@@ -8,6 +8,7 @@ import {
   View,
   SafeAreaView,
   ScrollView,
+  FlatList,
 } from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
@@ -59,6 +60,7 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
       <View style={styles.bottomView}>
+        {/*         
         <ScrollView
           contentContainerStyle={styles.scrollContainer}
           bounces={true}
@@ -68,7 +70,17 @@ export default function App() {
               <Text style={styles.text}>{goal.text}</Text>
             </View>
           ))}
-        </ScrollView>
+        </ScrollView> */}
+        <FlatList
+          contentContainerStyle={styles.scrollContainer}
+          data={goals}
+          renderItem={({ item }) => (
+            <View key={item.id} style={styles.textView}>
+              <Text style={styles.text}>{item.text}</Text>
+            </View>
+          )}
+          keyExtractor={(item) => item.id}
+        />
       </View>
     </SafeAreaView>
   );
