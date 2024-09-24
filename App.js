@@ -51,6 +51,13 @@ export default function App() {
     setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
   };
 
+  const renderHeader = () => {
+    if (goals.length > 0) {
+      return <Text style={styles.listText}>My Goals</Text>;
+    }
+    return null;
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -83,8 +90,9 @@ export default function App() {
             <GoalItem item={item} onDelete={handleDeleteGoalItem} />
           )}
           ListEmptyComponent={() => (
-            <Text style={styles.emptyListText}>No goals to show</Text>
+            <Text style={styles.listText}>No goals to show</Text>
           )}
+          ListHeaderComponent={renderHeader}
         />
       </View>
     </SafeAreaView>
@@ -109,7 +117,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     rowGap: 5,
   },
-  emptyListText: {
+  listText: {
     color: "indigo",
     fontSize: 18,
     marginTop: 20,
