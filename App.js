@@ -82,6 +82,9 @@ export default function App() {
           renderItem={({ item }) => (
             <GoalItem item={item} onDelete={handleDeleteGoalItem} />
           )}
+          ListEmptyComponent={() => (
+            <Text style={styles.emptyListText}>No goals to show</Text>
+          )}
         />
       </View>
     </SafeAreaView>
@@ -105,5 +108,10 @@ const styles = StyleSheet.create({
   scrollContainer: {
     alignItems: "center",
     rowGap: 5,
+  },
+  emptyListText: {
+    color: "indigo",
+    fontSize: 18,
+    marginTop: 20,
   },
 });
