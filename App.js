@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { Alert, Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
 
@@ -13,6 +13,25 @@ export default function App() {
     setModalVisible(false);
     setInputData(data);
   };
+  const onCancel = () => {
+    Alert.alert(
+      'Confirm Cancel',
+      'Are you sure you want to cancel?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: () => setModalVisible(false),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -23,6 +42,7 @@ export default function App() {
           visible={isModalVisible}
           autoFocus={true}
           handleInputData={handleInputData}
+          onCancel={onCancel}
         />
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
