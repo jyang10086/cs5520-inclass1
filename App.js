@@ -1,6 +1,13 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Alert, Button, StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+} from "react-native";
 import Header from "./components/Header";
 import Input from "./components/Input";
 
@@ -9,29 +16,35 @@ export default function App() {
   const [inputData, setInputData] = useState("");
   const [isModalVisible, setModalVisible] = useState(false);
 
+  const [goals, setGoals] = useState([]);
+
   const handleInputData = (data) => {
     setModalVisible(false);
-    setInputData(data);
+    const newGoal = {
+      text: data,
+      id: Math.random().toString(),
+    };
+    setGoals((prevGoals) => [...prevGoals, newGoal]);
+    setInputData("");
   };
   const onCancel = () => {
     Alert.alert(
-      'Confirm Cancel',
-      'Are you sure you want to cancel?',
+      "Confirm Cancel",
+      "Are you sure you want to cancel?",
       [
         {
-          text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
         },
         {
-          text: 'OK',
+          text: "OK",
           onPress: () => setModalVisible(false),
         },
       ],
       { cancelable: false }
     );
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,7 +60,11 @@ export default function App() {
         <Button title="Add a goal" onPress={() => setModalVisible(true)} />
       </View>
       <View style={styles.bottomView}>
-        <Text style={styles.text}>{inputData}</Text>
+        {goals.map((goal) => (
+          <View key={goal.id} style={styles.textView}>
+            <Text style={styles.text}>{goal.text}</Text>
+          </View>
+        ))}
       </View>
     </SafeAreaView>
   );
@@ -61,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: 20,
-    flex: 1
+    flex: 1,
   },
   bottomView: {
     flex: 4,
@@ -71,5 +88,12 @@ const styles = StyleSheet.create({
   text: {
     margin: 10,
     color: "blue",
+    padding: 5,
+    fontSize: 16,
+  },
+  textView: {
+    borderRadius: 5,
+    marginTop:10,
+    backgroundColor: "gray",
   },
 });
