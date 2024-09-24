@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   },
   textView: {
     borderRadius: 5,
-    marginTop: 10,
     backgroundColor: "#aaa",
     flexDirection: "row",
   },

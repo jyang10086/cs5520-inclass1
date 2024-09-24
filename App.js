@@ -118,6 +118,9 @@ export default function App() {
           )}
           ListHeaderComponent={renderHeader}
           ListFooterComponent={renderFooter}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.separator} />;
+          }}
         />
       </View>
     </SafeAreaView>
@@ -146,5 +149,10 @@ const styles = StyleSheet.create({
     color: "indigo",
     fontSize: 18,
     marginTop: 20,
+  },
+  separator: {
+    height: 2,
+    backgroundColor: "indigo",
+    marginVertical: 10,
   },
 });
