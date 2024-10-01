@@ -18,10 +18,6 @@ export default function Home({ navigation }) {
 
   const [goals, setGoals] = useState([]);
 
-  const navigateToDetails = (item) => {
-    navigation.navigate("Details", { item });
-  };
-
   const handleInputData = (data) => {
     setModalVisible(false);
     const newGoal = {
@@ -116,7 +112,6 @@ export default function Home({ navigation }) {
             <GoalItem
               item={item}
               onDelete={handleDeleteGoalItem}
-              onPressInfo={() => navigateToDetails(item)}
             />
           )}
           ListEmptyComponent={() => (
