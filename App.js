@@ -51,6 +51,37 @@ export default function App() {
     setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
   };
 
+  const renderHeader = () => {
+    if (goals.length > 0) {
+      return <Text style={styles.listText}>My Goals</Text>;
+    }
+    return null;
+  };
+
+  const renderFooter = () => {
+    if (goals.length > 0) {
+      return <Button title="Delete All" onPress={deleteAllGoals} />;
+    }
+    return null;
+  };
+
+  const deleteAllGoals = () => {
+    Alert.alert(
+      "Delete All Goals",
+      "Are you sure you want to delete all goals?",
+      [
+        {
+          text: "No",
+          style: "cancel",
+        },
+        {
+          text: "Yes",
+          onPress: () => setGoals([]),
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -82,6 +113,14 @@ export default function App() {
           renderItem={({ item }) => (
             <GoalItem item={item} onDelete={handleDeleteGoalItem} />
           )}
+          ListEmptyComponent={() => (
+            <Text style={styles.listText}>No goals to show</Text>
+          )}
+          ListHeaderComponent={renderHeader}
+          ListFooterComponent={renderFooter}
+          ItemSeparatorComponent={() => {
+            return <View style={styles.separator} />;
+          }}
         />
       </View>
     </SafeAreaView>
@@ -105,5 +144,15 @@ const styles = StyleSheet.create({
   scrollContainer: {
     alignItems: "center",
     rowGap: 5,
+  },
+  listText: {
+    color: "indigo",
+    fontSize: 18,
+    marginTop: 20,
+  },
+  separator: {
+    height: 2,
+    backgroundColor: "indigo",
+    marginVertical: 10,
   },
 });
