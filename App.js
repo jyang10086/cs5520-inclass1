@@ -11,7 +11,11 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={{ title: "Home" }}
+          options={{
+            title: "My goals",
+            headerStyle: { backgroundColor: "purple" },
+            headerTintColor: "white",
+          }}
         />
         <Stack.Screen name="Details" component={GoalDetails} />
       </Stack.Navigator>
