@@ -18,8 +18,8 @@ export default function Home({ navigation }) {
 
   const [goals, setGoals] = useState([]);
 
-  const navigateToDetails = () => {
-    navigation.navigate("Details"); // Navigating to the Details screen
+  const navigateToDetails = (item) => {
+    navigation.navigate("Details", { item });
   };
 
   const handleInputData = (data) => {
@@ -113,7 +113,11 @@ export default function Home({ navigation }) {
           contentContainerStyle={styles.scrollContainer}
           data={goals}
           renderItem={({ item }) => (
-            <GoalItem item={item} onDelete={handleDeleteGoalItem} onPressInfo={navigateToDetails}/>
+            <GoalItem
+              item={item}
+              onDelete={handleDeleteGoalItem}
+              onPressInfo={() => navigateToDetails(item)}
+            />
           )}
           ListEmptyComponent={() => (
             <Text style={styles.listText}>No goals to show</Text>
