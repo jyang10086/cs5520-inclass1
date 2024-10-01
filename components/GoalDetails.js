@@ -11,7 +11,7 @@ export default function GoalDetails({ navigation, route }) {
           Goal Details: {route.params.item.text} id: {route.params.item.id}
         </Text>
       ) : (
-        <Text>More Detail</Text>
+        <Text>More Details</Text>
       )}
       <Button title="More Details" onPress={handleMoreDetails} />
     </View>

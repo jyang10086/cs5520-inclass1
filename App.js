@@ -1,3 +1,4 @@
+import { Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./components/Home";
@@ -21,7 +22,10 @@ export default function App() {
           name="Details"
           component={GoalDetails}
           options={({ route }) => ({
-            title: route.params?.item.text || '',
+            title: route.params?.item.text || "More Details",
+            headerRight: () => {
+              return <Button title="Warning" />;
+            },
           })}
         />
       </Stack.Navigator>
