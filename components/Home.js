@@ -11,12 +11,16 @@ import {
 } from "react-native";
 import Header from "./Header";
 import Input from "./Input";
-import GoalItem from "./GoalItem"
-export default function Home() {
+import GoalItem from "./GoalItem";
+export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [goals, setGoals] = useState([]);
+
+  const navigateToDetails = () => {
+    navigation.navigate("Details"); // Navigating to the Details screen
+  };
 
   const handleInputData = (data) => {
     setModalVisible(false);
@@ -109,7 +113,7 @@ export default function Home() {
           contentContainerStyle={styles.scrollContainer}
           data={goals}
           renderItem={({ item }) => (
-            <GoalItem item={item} onDelete={handleDeleteGoalItem} />
+            <GoalItem item={item} onDelete={handleDeleteGoalItem} onPressInfo={navigateToDetails}/>
           )}
           ListEmptyComponent={() => (
             <Text style={styles.listText}>No goals to show</Text>
@@ -154,4 +158,3 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
 });
-
