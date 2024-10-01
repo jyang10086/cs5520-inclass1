@@ -7,7 +7,9 @@ export default function GoalItem({ item, onDelete, onPressInfo }) {
       <View style={styles.buttonView}>
         <Button title="X" color="grey" onPress={() => onDelete(item.id)} />
       </View>
-      <Button title="i" onPress={() => onPressInfo(item.id)} />
+      <View style={styles.buttonView}>
+        <Button title="i" color="grey" onPress={() => onPressInfo(item.id)} />
+      </View>
     </View>
   );
 }
