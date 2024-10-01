@@ -1,4 +1,4 @@
-import { Button } from "react-native";
+import { Button, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./components/Home";
@@ -8,7 +8,7 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={styles.naviContainer}>
         <Stack.Screen
           name="Home"
           component={Home}
@@ -32,3 +32,10 @@ export default function App() {
     </NavigationContainer>
   );
 }
+
+const styles = StyleSheet.create({
+  naviContainer: {
+    headerStyle: { backgroundColor: "purple" },
+    headerTintColor: "white",
+  },
+});
