@@ -8,6 +8,7 @@ export default function GoalDetails({ navigation, route }) {
   };
 
   const handleWarningPress = () => {
+    console.log('warning!')
     setTextColor("red");
     navigation.setOptions({ title: "Warning!" });
   };
