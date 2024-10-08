@@ -12,6 +12,7 @@ import {
 import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
+import PressableButton from "./PressableButton";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
@@ -91,7 +92,12 @@ export default function Home({ navigation }) {
           handleInputData={handleInputData}
           onCancel={onCancel}
         />
-        <Button title="Add a goal" onPress={() => setModalVisible(true)} />
+        <PressableButton
+          componentStyle={styles.button}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.buttonText}>Add a goal</Text>
+        </PressableButton>
       </View>
       <View style={styles.bottomView}>
         {/*         
@@ -109,10 +115,7 @@ export default function Home({ navigation }) {
           contentContainerStyle={styles.scrollContainer}
           data={goals}
           renderItem={({ item }) => (
-            <GoalItem
-              item={item}
-              onDelete={handleDeleteGoalItem}
-            />
+            <GoalItem item={item} onDelete={handleDeleteGoalItem} />
           )}
           ListEmptyComponent={() => (
             <Text style={styles.listText}>No goals to show</Text>
@@ -156,4 +159,14 @@ const styles = StyleSheet.create({
     backgroundColor: "indigo",
     marginVertical: 10,
   },
+  button: {
+    backgroundColor: "indigo",
+    marginTop: 10,
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+  }
 });

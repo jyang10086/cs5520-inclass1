@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import PressableButton from "./PressableButton";
 
 export default function GoalItem({ item, onDelete }) {
   const navigation = useNavigation();
@@ -19,9 +20,16 @@ export default function GoalItem({ item, onDelete }) {
         android_ripple={{ color: "red", radius: 25 }}
       >
         <Text style={styles.text}>{item.text}</Text>
-        <View style={styles.buttonView}>
+        <PressableButton
+          onPress={() => onDelete(item.id)}
+          componentStyle={styles.buttonView}
+          pressedStyle={styles.pressedStyle}
+        >
+          <Text style={{ color: "white" }}>X</Text>
+        </PressableButton>
+        {/* <View style={styles.buttonView}>
           <Button title="X" color="grey" onPress={() => onDelete(item.id)} />
-        </View>
+        </View> */}
         {/* <View style={styles.buttonView}>
           <Button title="i" color="grey" onPress={handlePressInfo} />
         </View> */}
@@ -47,9 +55,10 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     justifyContent: "center",
+    padding:10,
   },
   pressedStyle: {
-    backgroundColor: "gray",
+    backgroundColor: 'grey',
     opacity: 0.2,
   },
 });
