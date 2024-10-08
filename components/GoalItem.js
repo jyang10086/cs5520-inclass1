@@ -11,9 +11,12 @@ export default function GoalItem({ item, onDelete }) {
   return (
     <View key={item.id} style={styles.textView}>
       <Pressable
+        style={({ pressed }) => [
+          styles.horizontalView,
+          pressed && styles.pressedStyle, // Apply pressed state style conditionally
+        ]}
         onPress={handlePressInfo}
-        style={styles.horizontalView}
-        android_ripple={{ color: "red", radius: 25}}
+        android_ripple={{ color: "red", radius: 25 }}
       >
         <Text style={styles.text}>{item.text}</Text>
         <View style={styles.buttonView}>
@@ -44,5 +47,9 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     justifyContent: "center",
+  },
+  pressedStyle: {
+    backgroundColor: "gray",
+    opacity: 0.2,
   },
 });
