@@ -9,8 +9,12 @@ export default function GoalItem({ item, onDelete }) {
   };
 
   return (
-    <Pressable onPress={handlePressInfo}>
-      <View key={item.id} style={styles.textView}>
+    <View key={item.id} style={styles.textView}>
+      <Pressable
+        onPress={handlePressInfo}
+        style={styles.horizontalView}
+        android_ripple={{ color: "red", radius: 25}}
+      >
         <Text style={styles.text}>{item.text}</Text>
         <View style={styles.buttonView}>
           <Button title="X" color="grey" onPress={() => onDelete(item.id)} />
@@ -18,8 +22,8 @@ export default function GoalItem({ item, onDelete }) {
         {/* <View style={styles.buttonView}>
           <Button title="i" color="grey" onPress={handlePressInfo} />
         </View> */}
-      </View>
-    </Pressable>
+      </Pressable>
+    </View>
   );
 }
 
@@ -33,7 +37,10 @@ const styles = StyleSheet.create({
   textView: {
     borderRadius: 5,
     backgroundColor: "#aaa",
+  },
+  horizontalView: {
     flexDirection: "row",
+    alignItems: "center",
   },
   buttonView: {
     justifyContent: "center",
