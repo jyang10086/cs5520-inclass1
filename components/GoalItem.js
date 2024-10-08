@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, View, Text, StyleSheet, Pressable } from "react-native";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 
@@ -25,7 +26,7 @@ export default function GoalItem({ item, onDelete }) {
           componentStyle={styles.buttonView}
           pressedStyle={styles.pressedStyle}
         >
-          <Text style={{ color: "white" }}>X</Text>
+          <AntDesign name="delete" size={24} color="black" />
         </PressableButton>
         {/* <View style={styles.buttonView}>
           <Button title="X" color="grey" onPress={() => onDelete(item.id)} />

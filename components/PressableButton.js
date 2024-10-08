@@ -23,11 +23,11 @@ const PressableButton = ({
 
 const styles = StyleSheet.create({
   defaultStyle: {
-    backgroundColor: "red",
+    backgroundColor: "transparent",
   },
   defaultPressedStyle: {
     opacity: 0.2,
-  }
+  },
 });
 
 export default PressableButton;
