@@ -1,6 +1,13 @@
 import React from "react";
 import { Button, View, Text, StyleSheet } from "react-native";
-export default function GoalItem({ item, onDelete, onPressInfo }) {
+import { useNavigation } from '@react-navigation/native';
+
+export default function GoalItem({ item, onDelete }) {
+  const navigation = useNavigation();
+  const handlePressInfo = () => {
+    navigation.navigate("Details", { item });
+  };
+
   return (
     <View key={item.id} style={styles.textView}>
       <Text style={styles.text}>{item.text}</Text>
@@ -8,7 +15,7 @@ export default function GoalItem({ item, onDelete, onPressInfo }) {
         <Button title="X" color="grey" onPress={() => onDelete(item.id)} />
       </View>
       <View style={styles.buttonView}>
-        <Button title="i" color="grey" onPress={() => onPressInfo(item.id)} />
+        <Button title="i" color="grey" onPress={handlePressInfo} />
       </View>
     </View>
   );
