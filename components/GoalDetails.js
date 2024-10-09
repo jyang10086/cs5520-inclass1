@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, View, Text } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import PressableButton from "./PressableButton";
 export default function GoalDetails({ navigation, route }) {
   const [textColor, setTextColor] = useState("black");
 
@@ -8,7 +10,7 @@ export default function GoalDetails({ navigation, route }) {
   };
 
   const handleWarningPress = () => {
-    console.log('warning!')
+    console.log("warning!");
     setTextColor("red");
     navigation.setOptions({ title: "Warning!" });
   };
@@ -16,7 +18,12 @@ export default function GoalDetails({ navigation, route }) {
   useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button title="Warning" onPress={handleWarningPress} />
+        <PressableButton
+          pressedStyle={{ backgroundColor: "lightgray" }}
+          onPress={handleWarningPress}
+        >
+          <AntDesign name="warning" size={24} color="white" />
+        </PressableButton>
       ),
     });
   }, [navigation]);
