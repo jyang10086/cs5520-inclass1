@@ -4,7 +4,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 
-export default function GoalItem({ item, onDelete }) {
+export default function GoalItem({ item, onDelete, separators }) {
   const navigation = useNavigation();
   const handlePressInfo = () => {
     navigation.navigate("Details", { item });
@@ -31,6 +31,8 @@ export default function GoalItem({ item, onDelete }) {
           styles.horizontalView,
           pressed && styles.pressedStyle, // Apply pressed state style conditionally
         ]}
+        onPressIn={() => separators.highlight()}
+        onPressOut={() => separators.unhighlight()}
         onLongPress={handleLongPress}
         onPress={handlePressInfo}
         android_ripple={{ color: "red", radius: 25 }}
@@ -72,6 +74,7 @@ const styles = StyleSheet.create({
   buttonView: {
     justifyContent: "center",
     padding: 10,
+    backgroundColor: "gray",
   },
   pressedStyle: {
     backgroundColor: "grey",
