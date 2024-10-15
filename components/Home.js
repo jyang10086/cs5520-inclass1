@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Alert,
@@ -14,11 +14,23 @@ import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
 import { writeToDB } from "../Firebase/firestoreHelper";
+import { database } from "../Firebase/firebaseSetup";
+import { collection, onSnapshot } from "firebase/firestore";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      const updatedGoals = querySnapshot.docs.map((snapDoc) => ({
+        ...snapDoc.data(),
+        id: snapDoc.id, // Adding document ID
+      }));
+      setGoals(updatedGoals);
+    });
+  }, []);
 
   const handleInputData = (data) => {
     setModalVisible(false);
