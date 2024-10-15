@@ -13,7 +13,7 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { writeToDB } from "../Firebase/firestoreHelper";
+import { deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
 import { collection, onSnapshot } from "firebase/firestore";
 export default function Home({ navigation }) {
@@ -39,7 +39,6 @@ export default function Home({ navigation }) {
       id: Math.random().toString(),
     };
     writeToDB("goals", newGoal);
-    setGoals((prevGoals) => [...prevGoals, newGoal]);
   };
   const onCancel = () => {
     Alert.alert(
@@ -61,7 +60,7 @@ export default function Home({ navigation }) {
   };
 
   const handleDeleteGoalItem = (id) => {
-    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+    deleteFromDB('goals', id);
   };
 
   const renderHeader = () => {
