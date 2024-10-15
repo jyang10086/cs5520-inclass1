@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Alert,
@@ -13,11 +13,24 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { deleteAll, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
+import { database } from "../Firebase/firebaseSetup";
+import { collection, onSnapshot } from "firebase/firestore";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
 
   const [goals, setGoals] = useState([]);
+
+  useEffect(() => {
+    onSnapshot(collection(database, "goals"), (querySnapshot) => {
+      const updatedGoals = querySnapshot.docs.map((snapDoc) => ({
+        ...snapDoc.data(),
+        id: snapDoc.id, // Adding document ID
+      }));
+      setGoals(updatedGoals);
+    });
+  }, []);
 
   const handleInputData = (data) => {
     setModalVisible(false);
@@ -25,7 +38,7 @@ export default function Home({ navigation }) {
       text: data,
       id: Math.random().toString(),
     };
-    setGoals((prevGoals) => [...prevGoals, newGoal]);
+    writeToDB("goals", newGoal);
   };
   const onCancel = () => {
     Alert.alert(
@@ -47,7 +60,7 @@ export default function Home({ navigation }) {
   };
 
   const handleDeleteGoalItem = (id) => {
-    setGoals((prevGoals) => prevGoals.filter((goal) => goal.id !== id));
+    deleteFromDB('goals', id);
   };
 
   const renderHeader = () => {
@@ -75,7 +88,7 @@ export default function Home({ navigation }) {
         },
         {
           text: "Yes",
-          onPress: () => setGoals([]),
+          onPress: () => deleteAll('goals'),
         },
       ]
     );
