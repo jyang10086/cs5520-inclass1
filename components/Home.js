@@ -13,6 +13,7 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
+import { writeToDB } from "../Firebase/firestoreHelper";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
@@ -25,6 +26,7 @@ export default function Home({ navigation }) {
       text: data,
       id: Math.random().toString(),
     };
+    writeToDB("goals", newGoal);
     setGoals((prevGoals) => [...prevGoals, newGoal]);
   };
   const onCancel = () => {
