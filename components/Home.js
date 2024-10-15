@@ -13,7 +13,7 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
+import { deleteAll, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
 import { collection, onSnapshot } from "firebase/firestore";
 export default function Home({ navigation }) {
@@ -88,7 +88,7 @@ export default function Home({ navigation }) {
         },
         {
           text: "Yes",
-          onPress: () => setGoals([]),
+          onPress: () => deleteAll('goals'),
         },
       ]
     );
