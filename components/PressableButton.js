@@ -2,6 +2,7 @@ import { Pressable, View, StyleSheet } from "react-native";
 
 const PressableButton = ({
   onPress,
+  handleLongPress,
   children,
   componentStyle,
   pressedStyle,
@@ -9,6 +10,7 @@ const PressableButton = ({
   return (
     <Pressable
       onPress={onPress}
+      onLongPress={handleLongPress} 
       style={({ pressed }) => [
         styles.defaultStyle,
         componentStyle,

@@ -1,13 +1,27 @@
 import React from "react";
-import { Button, View, Text, StyleSheet, Pressable } from "react-native";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { Alert, View, Text, StyleSheet, Pressable } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 import PressableButton from "./PressableButton";
 
-export default function GoalItem({ item, onDelete }) {
+export default function GoalItem({ item, onDelete, separators }) {
   const navigation = useNavigation();
   const handlePressInfo = () => {
     navigation.navigate("Details", { item });
+  };
+
+  const handleLongPress = () => {
+    Alert.alert("Delete Goal", "Are you sure you want to delete this goal?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+        onPress: () => onDelete(item.id),
+        style: "destructive",
+      },
+    ]);
   };
 
   return (
@@ -17,6 +31,9 @@ export default function GoalItem({ item, onDelete }) {
           styles.horizontalView,
           pressed && styles.pressedStyle, // Apply pressed state style conditionally
         ]}
+        onPressIn={() => separators.highlight()}
+        onPressOut={() => separators.unhighlight()}
+        onLongPress={handleLongPress}
         onPress={handlePressInfo}
         android_ripple={{ color: "red", radius: 25 }}
       >
@@ -56,10 +73,11 @@ const styles = StyleSheet.create({
   },
   buttonView: {
     justifyContent: "center",
-    padding:10,
+    padding: 10,
+    backgroundColor: "gray",
   },
   pressedStyle: {
-    backgroundColor: 'grey',
+    backgroundColor: "grey",
     opacity: 0.2,
   },
 });

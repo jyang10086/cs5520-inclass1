@@ -114,17 +114,26 @@ export default function Home({ navigation }) {
         <FlatList
           contentContainerStyle={styles.scrollContainer}
           data={goals}
-          renderItem={({ item }) => (
-            <GoalItem item={item} onDelete={handleDeleteGoalItem} />
+          renderItem={({ item, separators }) => (
+            <GoalItem
+              item={item}
+              onDelete={handleDeleteGoalItem}
+              separators={separators}
+            />
           )}
           ListEmptyComponent={() => (
             <Text style={styles.listText}>No goals to show</Text>
           )}
           ListHeaderComponent={renderHeader}
           ListFooterComponent={renderFooter}
-          ItemSeparatorComponent={() => {
-            return <View style={styles.separator} />;
-          }}
+          ItemSeparatorComponent={({ highlighted }) => (
+            <View
+              style={[
+                styles.separator,
+                highlighted && styles.highlightedSeparator,
+              ]}
+            />
+          )}
         />
       </View>
     </SafeAreaView>
@@ -156,7 +165,7 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 2,
-    backgroundColor: "indigo",
+    backgroundColor: "grey",
     marginVertical: 10,
   },
   button: {
@@ -166,7 +175,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 20,
-  }
+  },
+  highlightedSeparator: {
+    backgroundColor: "indigo",
+  },
 });
