@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, View, Text } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import PressableButton from "./PressableButton";
+import { updateFromDB } from "../Firebase/firestoreHelper";
 export default function GoalDetails({ navigation, route }) {
   const [textColor, setTextColor] = useState("black");
 
@@ -12,6 +13,7 @@ export default function GoalDetails({ navigation, route }) {
   const handleWarningPress = () => {
     console.log("warning!");
     setTextColor("red");
+    updateFromDB("goals", route.params.item.id, { warning: true });
     navigation.setOptions({ title: "Warning!" });
   };
 
