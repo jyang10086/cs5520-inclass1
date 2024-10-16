@@ -13,7 +13,11 @@ import Header from "./Header";
 import Input from "./Input";
 import GoalItem from "./GoalItem";
 import PressableButton from "./PressableButton";
-import { deleteAll, deleteFromDB, writeToDB } from "../Firebase/firestoreHelper";
+import {
+  deleteAll,
+  deleteFromDB,
+  writeToDB,
+} from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
 import { collection, onSnapshot } from "firebase/firestore";
 export default function Home({ navigation }) {
@@ -23,13 +27,17 @@ export default function Home({ navigation }) {
   const [goals, setGoals] = useState([]);
 
   useEffect(() => {
-    onSnapshot(collection(database, "goals"), (querySnapshot) => {
-      const updatedGoals = querySnapshot.docs.map((snapDoc) => ({
-        ...snapDoc.data(),
-        id: snapDoc.id, // Adding document ID
-      }));
-      setGoals(updatedGoals);
-    });
+    const unsubscribe = onSnapshot(
+      collection(database, "goals"),
+      (querySnapshot) => {
+        const updatedGoals = querySnapshot.docs.map((snapDoc) => ({
+          ...snapDoc.data(),
+          id: snapDoc.id, // Adding document ID
+        }));
+        setGoals(updatedGoals);
+      }
+    );
+    return () => unsubscribe();
   }, []);
 
   const handleInputData = (data) => {
@@ -60,7 +68,7 @@ export default function Home({ navigation }) {
   };
 
   const handleDeleteGoalItem = (id) => {
-    deleteFromDB('goals', id);
+    deleteFromDB("goals", id);
   };
 
   const renderHeader = () => {
@@ -88,7 +96,7 @@ export default function Home({ navigation }) {
         },
         {
           text: "Yes",
-          onPress: () => deleteAll('goals'),
+          onPress: () => deleteAll("goals"),
         },
       ]
     );
