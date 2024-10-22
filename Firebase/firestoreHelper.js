@@ -11,7 +11,7 @@ import { database } from "./firebaseSetup";
 export async function writeToDB(collectionNme, data) {
   try {
     const docRef = await addDoc(collection(database, collectionNme), data);
-    console.log('write to db successfully');
+    console.log(docRef);
   } catch (err) {
     console.log("Error adding document: ", err);
   }
@@ -41,12 +41,21 @@ export async function deleteAll(collectionNme) {
 
 export const updateFromDB = async (collectionNme, id, updateObj) => {
   try {
-    await updateDoc(
-      doc(database, collectionNme, id),
-      updateObj
-    );
+    await updateDoc(doc(database, collectionNme, id), updateObj);
     console.log("updating successfully", id);
   } catch (error) {
     console.error("Error updating document: ", error);
+  }
+};
+
+export const getAllDocs = async (collectionNme) => {
+  try {
+    const querySnapshot = await getDocs(collection(database, collectionNme));
+    const data = querySnapshot.docs.map((docSnap) => {
+      return docSnap.data();
+    });
+    return data;
+  } catch (error) {
+    console.error("Error getAllDocs: ", error);
   }
 };
