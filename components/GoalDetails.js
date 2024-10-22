@@ -3,6 +3,7 @@ import { Button, View, Text } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import PressableButton from "./PressableButton";
 import { updateFromDB } from "../Firebase/firestoreHelper";
+import GoalUsers from "./GoalUsers";
 export default function GoalDetails({ navigation, route }) {
   const [textColor, setTextColor] = useState("black");
   const handleMoreDetails = () => {
@@ -30,11 +31,11 @@ export default function GoalDetails({ navigation, route }) {
   }, [navigation]);
 
   useEffect(() => {
-    if (route.params.item && route.params.item.warning) {
+    if (route.params?.item && route.params.item.warning) {
       setTextColor("red");
       navigation.setOptions({ title: "Warning!" });
     }
-  }, [route.params.item]);
+  }, [route.params?.item]);
 
   return (
     <View>
@@ -46,6 +47,7 @@ export default function GoalDetails({ navigation, route }) {
         <Text style={{ color: textColor }}>More Details</Text>
       )}
       <Button title="More Details" onPress={handleMoreDetails} />
+      <GoalUsers/>
     </View>
   );
 }
