@@ -47,7 +47,7 @@ export default function GoalDetails({ navigation, route }) {
         <Text style={{ color: textColor }}>More Details</Text>
       )}
       <Button title="More Details" onPress={handleMoreDetails} />
-      <GoalUsers/>
+      <GoalUsers id={route.params.item.id}/>
     </View>
   );
 }

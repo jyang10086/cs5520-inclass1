@@ -1,7 +1,8 @@
-import { FlatList,Text, View, StyleSheet } from "react-native";
+import { FlatList, Text, View, StyleSheet } from "react-native";
 import { useEffect, useState } from "react";
+import { writeToDB } from "../Firebase/firestoreHelper";
 
-const GoalUsers = () => {
+const GoalUsers = ({ id }) => {
   const [users, setUsers] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
@@ -13,7 +14,10 @@ const GoalUsers = () => {
           throw new Error(`HTTP Error! Status: ${response.status}`);
         }
         const data = await response.json();
-        setUsers(data.map(user => user.name));
+        data.forEach((user) => {
+          writeToDB(`/goals/${id}/users`, user);
+        });
+        setUsers(data.map((user) => user.name));
       } catch (error) {
         console.error("Error fetching users:", error);
       }
@@ -22,12 +26,7 @@ const GoalUsers = () => {
   }, []);
   return (
     <View style={styles.container}>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => (
-          <Text style={styles.userText}>{item}</Text>
-        )}
-      />
+      <FlatList data={users} renderItem={({ item }) => <Text>{item}</Text>} />
     </View>
   );
 };

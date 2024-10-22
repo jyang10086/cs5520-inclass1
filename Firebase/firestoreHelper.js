@@ -11,7 +11,7 @@ import { database } from "./firebaseSetup";
 export async function writeToDB(collectionNme, data) {
   try {
     const docRef = await addDoc(collection(database, collectionNme), data);
-    console.log(docRef);
+    console.log('write to db successfully');
   } catch (err) {
     console.log("Error adding document: ", err);
   }
