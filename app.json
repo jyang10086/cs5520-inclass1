@@ -3,7 +3,7 @@
     "name": "mobile_inclass_1",
     "slug": "mobile_inclass_1",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "landscape",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
