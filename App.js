@@ -1,20 +1,32 @@
 import { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "./Firebase/firebaseSetup";
 import Home from "./components/Home";
 import GoalDetails from "./components/GoalDetails";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
+import AntDesign from "@expo/vector-icons/AntDesign";
+import Profile from "./components/Profile";
+import PressableButton from "./components/PressableButton";
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      Alert.alert("Success", "You have been logged out.");
+    } catch (error) {
+      console.error("Sign out error:", error); // Log error to console
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user)
       if (user) {
         setIsUserLoggedIn(true);
       } else {
@@ -35,17 +47,35 @@ export default function App() {
       <Stack.Screen
         name="Home"
         component={Home}
-        options={{
+        options={({ navigation, route }) => ({
           title: "My goals",
           headerStyle: { backgroundColor: "purple" },
           headerTintColor: "white",
-        }}
+          headerRight: () => (
+            <PressableButton onPress={() => navigation.navigate("Profile")}>
+              <AntDesign name="user" size={24} color="white" />
+            </PressableButton>
+          ),
+        })}
       />
       <Stack.Screen
         name="Details"
         component={GoalDetails}
         options={({ route }) => ({
           title: route.params?.item.text || "More Details",
+        })}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={Profile}
+        options={({ navigation, route }) => ({
+          headerStyle: { backgroundColor: "purple" },
+          headerTintColor: "white",
+          headerRight: () => (
+            <PressableButton onPress={handleSignOut}>
+              <AntDesign name="logout" size={24} color="white" />
+            </PressableButton>
+          ),
         })}
       />
     </>

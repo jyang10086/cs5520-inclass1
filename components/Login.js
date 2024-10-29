@@ -32,7 +32,6 @@ const Login = ({ navigation }) => {
         password
       );
       const user = userCredential.user;
-      navigation.replace("Home");
       Alert.alert("Success", "You are logged in!");
     } catch (error) {
       console.log(error)
@@ -59,7 +58,7 @@ const Login = ({ navigation }) => {
       <Button title="Login" onPress={handleLogin} />
       <Button
         title="New User? Create an account"
-        onPress={() => navigation.navigate("Signup")}
+        onPress={() => navigation.replace("Signup")}
       />
     </View>
   );
