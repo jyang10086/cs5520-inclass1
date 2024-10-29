@@ -39,7 +39,6 @@ const Signup = ({ navigation }) => {
       );
       const user = userCredential.user;
       Alert.alert("Success", "User account created!");
-      navigation.navigate("Login");
     } catch (error) {
       console.log(error)
       Alert.alert("Signup failed", error.message);
