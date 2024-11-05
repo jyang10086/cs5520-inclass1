@@ -50,7 +50,7 @@ export default function Home({ navigation }) {
   const handleInputData = (data) => {
     setModalVisible(false);
     const newGoal = {
-      text: data,
+      text: data.text,
       id: Math.random().toString(),
       owner: auth.currentUser.uid,
     };

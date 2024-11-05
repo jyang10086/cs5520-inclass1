@@ -2,7 +2,7 @@ import { useState } from "react";
 import { View, Button, Alert, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-const ImageManager = () => {
+const ImageManager = ({ receiveImageUri }) => {
   const [response, requestPermission] = ImagePicker.useCameraPermissions();
   const [imageUri, setImageUri] = useState(null);
   const verifyPermission = async () => {
@@ -28,7 +28,9 @@ const ImageManager = () => {
       });
 
       if (!result.canceled) {
-        setImageUri(result.assets[0].uri);
+        const uri = result.assets[0].uri;
+        setImageUri(uri);
+        receiveImageUri(uri);
       }
     } catch (err) {
       console.error(err);
@@ -39,7 +41,7 @@ const ImageManager = () => {
     <View>
       <Button title="Open Camera" onPress={takeImageHandler} />
       {imageUri && (
-        <Image source={{ uri: imageUri }} style={{ width: 200, height: 300 }} />
+        <Image source={{ uri: imageUri }} style={{ width: 50, height: 50 }} />
       )}
     </View>
   );
