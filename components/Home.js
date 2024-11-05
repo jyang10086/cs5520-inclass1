@@ -19,7 +19,8 @@ import {
   writeToDB,
 } from "../Firebase/firestoreHelper";
 import { database } from "../Firebase/firebaseSetup";
-import { collection, onSnapshot } from "firebase/firestore";
+import { query, collection, onSnapshot, where } from "firebase/firestore";
+import { auth } from "../Firebase/firebaseSetup";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
   const [isModalVisible, setModalVisible] = useState(false);
@@ -28,13 +29,19 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      collection(database, "goals"),
+      query(
+        collection(database, "goals"),
+        where("owner", "==", auth.currentUser.uid) // Filtering goals where owner matches the current user's UID
+      ),
       (querySnapshot) => {
         const updatedGoals = querySnapshot.docs.map((snapDoc) => ({
           ...snapDoc.data(),
           id: snapDoc.id, // Adding document ID
         }));
-        setGoals(updatedGoals);
+        setGoals(updatedGoals); // Assuming setGoals is a function to update state
+      },
+      (error) => {
+        console.log(error); // Handling any potential errors
       }
     );
     return () => unsubscribe();
@@ -45,6 +52,7 @@ export default function Home({ navigation }) {
     const newGoal = {
       text: data,
       id: Math.random().toString(),
+      owner: auth.currentUser.uid,
     };
     writeToDB("goals", newGoal);
   };
