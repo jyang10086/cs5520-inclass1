@@ -8,6 +8,7 @@ import {
   Modal,
   StyleSheet,
 } from "react-native";
+import ImageManager from "./ImageManager";
 export default function Input({
   autoFocus,
   onCancel,
@@ -40,6 +41,7 @@ export default function Input({
       <View style={styles.container}>
         <View style={styles.modelContainer}>
           <View style={styles.imageView}>
+            <ImageManager />
             {/* alt props is to support accessibility.It is used to 
             display when the image is not loaded or for use by assistive devices.*/}
             <Image
