@@ -27,13 +27,10 @@ const ImageManager = () => {
         allowsEditing: true, // Allow user to edit the image
       });
 
-      // Check if the image picking was canceled
       if (!result.canceled) {
-        console.log(result.assets[0].uri)
-        setImageUri(result.assets[0].uri); // Get URI from the first asset
+        setImageUri(result.assets[0].uri);
       }
     } catch (err) {
-      Alert.alert("An error occurred while trying to open the camera.");
       console.error(err);
     }
   };
@@ -42,7 +39,7 @@ const ImageManager = () => {
     <View>
       <Button title="Open Camera" onPress={takeImageHandler} />
       {imageUri && (
-        <Image source={{ uri: imageUri }} style={{width: 200, height:300}}/>
+        <Image source={{ uri: imageUri }} style={{ width: 200, height: 300 }} />
       )}
     </View>
   );
