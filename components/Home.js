@@ -18,8 +18,9 @@ import {
   deleteFromDB,
   writeToDB,
 } from "../Firebase/firestoreHelper";
-import { database } from "../Firebase/firebaseSetup";
+import { database, storage } from "../Firebase/firebaseSetup";
 import { query, collection, onSnapshot, where } from "firebase/firestore";
+import { ref, uploadBytesResumable } from "firebase/storage";
 import { auth } from "../Firebase/firebaseSetup";
 export default function Home({ navigation }) {
   const appName = "Hello5520";
@@ -47,13 +48,33 @@ export default function Home({ navigation }) {
     return () => unsubscribe();
   }, []);
 
-  const handleInputData = (data) => {
+  const fetchImage = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw Error(`An error happened`, response.status);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      return uploadResult.metadata.fullPath;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleInputData = async (data) => {
     setModalVisible(false);
     const newGoal = {
       text: data.text,
       id: Math.random().toString(),
       owner: auth.currentUser.uid,
     };
+    if (data.imageUri) {
+      const uri = await fetchImage(data.imageUri);
+      newGoal.imageUri = uri;
+    }
     writeToDB("goals", newGoal);
   };
   const onCancel = () => {
