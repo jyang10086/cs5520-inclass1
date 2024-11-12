@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Alert, View, Button, Image } from "react-native";
 import * as Location from "expo-location";
+import { useNavigation } from "@react-navigation/native";
 
 const MAPS_API_KEY = process.env.EXPO_PUBLIC_mapApikey;
 
 const LocationManager = () => {
+  const navigation = useNavigation();
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
 
@@ -43,10 +45,16 @@ const LocationManager = () => {
     <View>
       <Button title="Locate User" onPress={locateUserHandler} />
       {location && (
-        <Image
-          source={{ uri: mapPreviewUrl }}
-          style={{ width: 400, height: 200 }}
-        />
+        <>
+          <Image
+            source={{ uri: mapPreviewUrl }}
+            style={{ width: 400, height: 200 }}
+          />
+          <Button
+            title="Open Map"
+            onPress={() => navigation.navigate("MapScreen")}
+          />
+        </>
       )}
     </View>
   );
