@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, View, Button, Image } from "react-native";
 import * as Location from "expo-location";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const MAPS_API_KEY = process.env.EXPO_PUBLIC_mapApikey;
 
@@ -9,6 +9,8 @@ const LocationManager = () => {
   const navigation = useNavigation();
   const [location, setLocation] = useState(null);
   const [response, requestPermission] = Location.useForegroundPermissions();
+  const [mapPreviewUrl, setMapPreviewUrl] = useState(null);
+  const route = useRoute();
 
   const verifyPermission = async () => {
     if (response?.granted) {
@@ -18,10 +20,6 @@ const LocationManager = () => {
     const permissionResponse = await requestPermission();
     return permissionResponse.granted;
   };
-
-  const mapPreviewUrl = location
-    ? `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${MAPS_API_KEY}`
-    : null;
 
   const locateUserHandler = async () => {
     const hasPermission = await verifyPermission();
@@ -40,6 +38,29 @@ const LocationManager = () => {
       console.log("locate user error:", err);
     }
   };
+
+  // Check if a location was picked in Map.js and set it as the current location
+  useEffect(() => {
+    if (route.params?.selectedLocation) {
+      setLocation(route.params.selectedLocation);
+    }
+  }, [route.params]);
+
+  useEffect(() => {
+    if (location) {
+      const baseUrl = "https://maps.googleapis.com/maps/api/staticmap";
+      const params = new URLSearchParams({
+        center: `${location.latitude},${location.longitude}`,
+        zoom: "14",
+        size: "400x200",
+        maptype: "roadmap",
+        markers: `color:red|label:L|${location.latitude},${location.longitude}`,
+        key: MAPS_API_KEY,
+      });
+      setMapPreviewUrl(`${baseUrl}?${params.toString()}`);
+      console.log(mapPreviewUrl)
+    }
+  }, [location]);
 
   return (
     <View>
