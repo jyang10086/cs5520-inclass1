@@ -58,7 +58,6 @@ const LocationManager = () => {
         key: MAPS_API_KEY,
       });
       setMapPreviewUrl(`${baseUrl}?${params.toString()}`);
-      console.log(mapPreviewUrl)
     }
   }, [location]);
 
