@@ -8,6 +8,7 @@ import {
   Modal,
   StyleSheet,
 } from "react-native";
+import ImageManager from "./ImageManager";
 export default function Input({
   autoFocus,
   onCancel,
@@ -16,6 +17,7 @@ export default function Input({
 }) {
   const [text, setText] = useState("");
   const [showCounter, setShowCounter] = useState(false);
+  const [imageUri, setimageUri] = useState(null);
 
   const handleBlur = () => {
     setShowCounter(false);
@@ -26,7 +28,7 @@ export default function Input({
   };
 
   const handleConfirm = () => {
-    handleInputData(text);
+    handleInputData({text, imageUri});
     setText("");
   };
 
@@ -35,11 +37,16 @@ export default function Input({
     setText("");
   };
 
+  const getImageUri =  async(uri) => {
+    setimageUri(uri);
+  }
+
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.container}>
         <View style={styles.modelContainer}>
           <View style={styles.imageView}>
+            <ImageManager receiveImageUri={getImageUri} />
             {/* alt props is to support accessibility.It is used to 
             display when the image is not loaded or for use by assistive devices.*/}
             <Image
