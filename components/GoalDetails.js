@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { Button, View, Text } from "react-native";
+import { Button, Image, View, Text } from "react-native";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import PressableButton from "./PressableButton";
 import { updateFromDB } from "../Firebase/firestoreHelper";
 import GoalUsers from "./GoalUsers";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../Firebase/firebaseSetup";
 export default function GoalDetails({ navigation, route }) {
   const [textColor, setTextColor] = useState("black");
+  const [imageUrl, setImageUrl] = useState(null);
   const handleMoreDetails = () => {
     navigation.push("Details");
   };
@@ -37,6 +40,21 @@ export default function GoalDetails({ navigation, route }) {
     }
   }, [route.params?.item]);
 
+  useEffect(() => {
+    if (route.params?.item?.imageUri) {
+      const fetchImageUrl = async () => {
+        try {
+          const reference = ref(storage, route.params?.item?.imageUri);
+          const url = await getDownloadURL(reference);
+          setImageUrl(url);
+        } catch (error) {
+          console.error("Error fetching image URL:", error);
+        }
+      };
+      fetchImageUrl();
+    }
+  }, [route.params?.item.imageUri]);
+
   return (
     <View>
       {route.params ? (
@@ -47,7 +65,13 @@ export default function GoalDetails({ navigation, route }) {
         <Text style={{ color: textColor }}>More Details</Text>
       )}
       <Button title="More Details" onPress={handleMoreDetails} />
-      <GoalUsers id={route.params.item.id}/>
+      <GoalUsers id={route.params.item.id} />
+      {imageUrl && (
+        <Image
+          source={{ uri: imageUrl }}
+          style={{ width: 200, height: 200, resizeMode: "cover" }}
+        />
+      )}
     </View>
   );
 }

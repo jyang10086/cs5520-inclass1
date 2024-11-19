@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { auth } from "../Firebase/firebaseSetup";
+import LocationManager from "./LocationManager";
 
 const Profile = () => {
   const user = auth.currentUser;
@@ -8,6 +9,7 @@ const Profile = () => {
     <View style={styles.container}>
       <Text style={styles.text}>Email: {user.email}</Text>
       <Text style={styles.text}>UID: {user.uid}</Text>
+      <LocationManager />
     </View>
   );
 };
