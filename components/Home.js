@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
+import * as Notifications from "expo-notifications";
 import {
   Alert,
   Button,
@@ -8,6 +9,7 @@ import {
   SafeAreaView,
   StyleSheet,
   FlatList,
+  Platform,
 } from "react-native";
 import Header from "./Header";
 import Input from "./Input";
@@ -46,6 +48,18 @@ export default function Home({ navigation }) {
       }
     );
     return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const getPushToken = async () => {
+      // Get the Expo push token
+      const pushToken = await Notifications.getExpoPushTokenAsync({
+        projectId: "1bb343a3-bb1f-4f60-85a3-4e66a2bdf9cc", // Add your projectId here
+      });
+      console.log(pushToken)
+
+    };
+    getPushToken();
   }, []);
 
   const fetchImage = async (uri) => {
