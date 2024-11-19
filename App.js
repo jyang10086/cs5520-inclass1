@@ -3,6 +3,7 @@ import { Alert, StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import * as Notifications from "expo-notifications";
 import { auth } from "./Firebase/firebaseSetup";
 import Home from "./components/Home";
 import GoalDetails from "./components/GoalDetails";
@@ -13,7 +14,13 @@ import Profile from "./components/Profile";
 import PressableButton from "./components/PressableButton";
 import MapScreen from "./components/Map";
 const Stack = createNativeStackNavigator();
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 export default function App() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 

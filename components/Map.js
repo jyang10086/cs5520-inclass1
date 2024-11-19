@@ -33,7 +33,7 @@ const MapScreen = () => {
         {selectedLocation && <Marker coordinate={selectedLocation} />}
       </MapView>
       <Button
-        title="Save Location"
+        title="Confirm"
         onPress={saveLocationHandler}
         disabled={!selectedLocation}
       />

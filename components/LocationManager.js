@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Alert, View, Button, Image } from "react-native";
 import * as Location from "expo-location";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { getUserLocation, saveUserLocation } from "../Firebase/firestoreHelper";
 
 const MAPS_API_KEY = process.env.EXPO_PUBLIC_mapApikey;
 
@@ -30,10 +31,11 @@ const LocationManager = () => {
     }
     try {
       const userLocation = await Location.getCurrentPositionAsync({});
-      setLocation({
+      const coord = {
         latitude: userLocation.coords.latitude,
         longitude: userLocation.coords.longitude,
-      });
+      };
+      setLocation(coord);
     } catch (err) {
       console.log("locate user error:", err);
     }
@@ -45,6 +47,21 @@ const LocationManager = () => {
       setLocation(route.params.selectedLocation);
     }
   }, [route.params]);
+
+  useEffect(() => {
+    const fetchUserLocation = async () => {
+      try {
+        const userData = await getUserLocation();
+        if (userData) {
+          setLocation(userData.location);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserLocation();
+  }, []);
 
   useEffect(() => {
     if (location) {
@@ -61,6 +78,9 @@ const LocationManager = () => {
     }
   }, [location]);
 
+  const saveLocationHandler = () => {
+    saveUserLocation(location);
+  };
   return (
     <View>
       <Button title="Locate User" onPress={locateUserHandler} />
@@ -73,6 +93,11 @@ const LocationManager = () => {
           <Button
             title="Open Map"
             onPress={() => navigation.navigate("MapScreen")}
+          />
+          <Button
+            title="Save Location"
+            onPress={saveLocationHandler}
+            disabled={!location}
           />
         </>
       )}
