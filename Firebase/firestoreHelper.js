@@ -3,10 +3,43 @@ import {
   addDoc,
   doc,
   deleteDoc,
+  getDoc,
   getDocs,
   updateDoc,
+  setDoc,
 } from "firebase/firestore";
-import { database } from "./firebaseSetup";
+import { auth, database } from "./firebaseSetup";
+
+export const getUserLocation = async () => {
+  try {
+    const userDocRef = doc(database, "users", auth.currentUser.uid); // Adjust the collection name if needed
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      return userDoc.data();
+    } else {
+      console.warn(`No user found with ID: ${userId}`);
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const saveUserLocation = async (location) => {
+  try {
+    const userId = auth.currentUser.uid; // Ensure the user is authenticated
+    const userDocRef = doc(database, "users", userId); // Reference to the user's document in the "users" collection
+
+    // Save location with merge option to avoid overwriting existing data
+    await setDoc(userDocRef, { location }, { merge: true });
+
+    console.log("User location saved successfully!");
+  } catch (error) {
+    console.error("Error saving user location:", error);
+    throw error;
+  }
+};
 
 export async function writeToDB(collectionNme, data) {
   try {
