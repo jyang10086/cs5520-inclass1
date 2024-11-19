@@ -65,7 +65,7 @@ export default function GoalDetails({ navigation, route }) {
         <Text style={{ color: textColor }}>More Details</Text>
       )}
       <Button title="More Details" onPress={handleMoreDetails} />
-      <GoalUsers id={route.params.item.id} />
+      {route.params && <GoalUsers id={route.params.item.id} />}
       {imageUrl && (
         <Image
           source={{ uri: imageUrl }}
